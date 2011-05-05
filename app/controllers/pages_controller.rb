@@ -2,15 +2,28 @@ class PagesController < ApplicationController
 
   before_filter :find_page, :only=>[:up, :down, :show, :edit, :update, :destroy]
 
+  # It's working!
   # I'am use nested_set scope from Model
   def index
     @pages = Page.nested_set.all
   end
 
+  # JUST TESTING! localhost:3000/pages/native
+  # Native nested set rendering
+  # Native rendering 10 times faster on page with 100 elements
+  # but I don't know how to customize rendered html as I wish
+  # Jquery plugin haven't flaxible posibilities to customizing (I think it must! it's on client side) !plz, refactor this if you can!
+  # Nested Set Gem haven't flaxible posibilities to customizing too (and I think it shouldn't.  It's on server side)
+  def native
+    # Some times I need to use reversed Nested Set (for rendering elements as plain list)
+    # Can I do this with native rendering helper? Now this issue is open for me.
+    @pages = Page.arrange
+  end
+
   # Attention!
   # if you want to use reversed_nested_set scope (see Model)
   # you should replace move_to_right_of with move_to_left_of  
-  # and move_to_right_of with move_to_left_of
+  # and replace move_to_right_of with move_to_left_of
   def restructure
     node_id   = params[:node_id].to_i
     parent_id = params[:parent_id].to_i

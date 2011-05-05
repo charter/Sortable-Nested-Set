@@ -5,6 +5,7 @@ SortableNestedSet::Application.routes.draw do
       get   :down
     }
     collection{
+      get   :native
       post  :restructure
     }
   end

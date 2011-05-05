@@ -16,7 +16,7 @@
   }//fn
 
   $(document).ready(function(){
-    $('ol.sortable').nestedSortable({
+    $('ul.sortable').nestedSortable({
       disableNesting: 'no-nest',
       forcePlaceholderSize: true,
       handle: 'div.handle',
@@ -95,5 +95,25 @@
   %span#next
     &nbsp;
 
-%ol.sortable.ui-sortable.nested_set#pages_nested_set
+-#
+  - node_parent_id = node.parent_id.blank? ? 0 : node.parent_id
+  - link_txt= node.id.to_s + ' :: ' +[node_parent_id, node.lft, node.rgt].join(' - ') + ' | '+  node.title
+  - title= node.id
+  - handle = content_tag :div, raw('&nbsp;'), :class=>:handle
+  = content_tag(:div, (handle + controls + link_to(link_txt, page_path(node), :title=>title)), :class=>"link #{'root' if root}")
+
+-# Questions
+= render_tree @pages, :id=>:pages_nested_set, :class=>'sortable ui-sortable nested_set' do |node, child|
+  %li{:id=>"#{node.id}_page"}
+    -# Link
+    - node_parent_id = node.parent_id.blank? ? 0 : node.parent_id
+    - link_txt= node.id.to_s + ' :: ' +[node_parent_id, node.lft, node.rgt].join(' - ') + ' | '+  node.title
+    - title= node.id
+    - handle = content_tag :div, raw('&nbsp;'), :class=>:handle
+    = content_tag(:div, (handle + link_to(link_txt, page_path(node), :title=>title)), :class=>"link#{' root' if node.parent_id.blank?}")
+
+    = child
+
+-#
+  %ol.sortable.ui-sortable.nested_set#pages_nested_set
   = raw ans_tree(@pages, :path=>'pages/nested_set', :admin=>true, :class_name=>'Page', :id_field=>:id)
