@@ -1,0 +1,99 @@
+- content_for :css do
+  =stylesheet_link_tag 'reset', :media=>'screen'
+  =stylesheet_link_tag 'nested_set/style', :media=>'screen'
+
+:javascript
+
+  function send_nested_sets_new_structure(item_id, parent_id, prev_id, next_id){
+    jQuery.ajax({
+      type: 'POST',
+      url: '#{restructure_pages_url}',
+      data: {node_id: item_id, parent_id: parent_id, prev_id: prev_id, next_id: next_id, authenticity_token: '#{form_authenticity_token}' },
+      dataType: 'script',
+      beforeSend: function(xhr){},
+      error: function(xhr, status, error){alert(error);}
+    });//jQuery.ajax
+  }//fn
+
+  $(document).ready(function(){
+    $('ol.sortable').nestedSortable({
+      disableNesting: 'no-nest',
+      forcePlaceholderSize: true,
+      handle: 'div.handle',
+      helper:	'clone',
+      items: 'li',
+      maxLevels: 5,
+      opacity: .6,
+      placeholder: 'placeholder',
+      revert: 250,
+      tabSize: 25,
+      tolerance: 'pointer',
+      toleranceElement: '> div'
+    })
+
+    $('ol.sortable').sortable({
+      update: function(event, ui){
+        // ITEM ID
+        item_id = ui.item.attr('id');
+        if(typeof(item_id) == 'undefined'){
+          $('#item').html('Have no id');
+        }else{
+          $('#item').html(item_id);
+        }
+        // PARENT ID
+        parent_id = ui.item.parent().attr('id');
+        $('#parent').html(parent_id);  
+        // PREV ID
+        prev_id = ui.item.prev().attr('id');
+        if(typeof(prev_id) == 'undefined'){
+          $('#prev').html('It is first!');
+        }else{
+          $('#prev').html(prev_id);
+        }
+        // NEXT ID
+        next_id = ui.item.next().attr('id');
+        if(typeof(next_id) == 'undefined'){
+          $('#next').html('It is last!');
+        }else{
+          $('#next').html(next_id);
+        }
+        send_nested_sets_new_structure(item_id, parent_id, prev_id, next_id);
+      }
+    });
+  });
+
+:css
+  .placeholder {
+    background-color: #cfcfcf;
+  }
+  .ui-nestedSortable-error {
+    background:#fbe3e4;
+    color:#8a1f11;
+  }
+  .nested_set_info{
+    border:1px solid #CCC;
+    margin:5px 0 15px 0;
+    padding:10px;
+  }
+  .nested_set_info span{
+    border:1px solid #CCF;
+    margin:0 10px;
+    padding:2px 5px;
+  }
+
+%p.nested_set_info
+  Item: 
+  %span#item
+    &nbsp;
+  Parent: 
+  %span#parent
+    &nbsp;
+  Prev sibling: 
+  %span#prev
+    &nbsp;
+  Next sibling: 
+  %span#next
+    &nbsp;
+
+%ol.sortable.ui-sortable.nested_set#pages_nested_set
+  = raw ans_tree(@pages, :path=>'pages/nested_set', :admin=>true, :class_name=>'Page', :id_field=>:id)
