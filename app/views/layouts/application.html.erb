@@ -2,8 +2,14 @@
 <html>
 <head>
   <title>SortableNestedSet</title>
-  <%= stylesheet_link_tag :all %>
-  <%= javascript_include_tag :defaults %>
+
+  <%= javascript_include_tag 'jquery-1.6.2.min' %>
+  <%= javascript_include_tag 'jquery-ui-1.8.11.custom.min' %>
+  <%= javascript_include_tag 'jquery.ui.nestedSortable' %>
+
+  <%= stylesheet_link_tag 'reset' %>
+  <%= stylesheet_link_tag 'nested_set/style' %>
+
   <%= csrf_meta_tag %>
   <%= yield :css %>
 </head>
