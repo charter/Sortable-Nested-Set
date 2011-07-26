@@ -1,18 +1,5 @@
 # Sample localization file for English. Add more files in this directory for other locales.
-# See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  pages:
-    new: 'Create new page'
-
-    edit: 'Edit'
-    edit_this: 'Edit this element'
-    delete: 'Delete'
-    delete_confirm: 'Are you sure?'
-    cant_be_deleted: 'Cant be deleted - has nested elements'
-    delete_nested_elements: 'Delete nested elements before deleting'
-
-    up: 'Up'
-    cant_up: 'Cant be up'
-    down: 'Down'
-    cant_down: 'Cant be down'
+  hello: "Hello world"
