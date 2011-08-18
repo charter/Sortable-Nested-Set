@@ -40,9 +40,11 @@
         }else{
           $('#item').html(item_id);
         }
+
         // PARENT ID
         parent_id = ui.item.parent().attr('id');
-        $('#parent').html(parent_id);  
+        $('#parent').html(parent_id);
+
         // PREV ID
         prev_id = ui.item.prev().attr('id');
         if(typeof(prev_id) == 'undefined'){
@@ -95,5 +97,5 @@
   %span#next
     &nbsp;
 
-%ol.sortable.ui-sortable.nested_set#pages_nested_set
+%ol.sortable.ui-sortable.nested_set#nested_set
   = raw ans_tree(@pages, :path=>'pages/nested_set', :admin=>true, :class_name=>'Page', :id_field=>:id)
