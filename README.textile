@@ -24,6 +24,7 @@ h3. Installing
 # sudo bundle install
 # rake app:create
 
+bq.
   development:
     adapter: mysql2
     database: sortable_nested_set_dev
