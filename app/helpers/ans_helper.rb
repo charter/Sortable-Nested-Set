@@ -1,13 +1,9 @@
-module AnsHelper
-  # Publicated by MIT
-  # Awesome Nested Set View Helper
-  # Ilya Zykin, zykin-ilya@ya.ru, Russia, Ivanovo 2009-2011
-  # github.com/the-teacher
-  #-------------------------------------------------------------------------------------------------------
-  
-  # =ans_tree(@pages, :class_name=>'Report', :id_field=>'id', :clean=>false)
-  # =ans_tree(@pages, :admin=>true, :class_name=>'Report', :id_field=>:zip, :clean=>false)
-
+# == Awesome Nested Set View Helper
+#
+# Ilya Zykin, zykin-ilya@ya.ru, Russia, Ivanovo 2009-2011
+#
+# github.com/the-teacher   (Publicated by MIT)
+module AnsHelper  
   def ans_controls(node, options= {})
     opts= {
       :class_name=>nil,   # class of nested elements
@@ -25,6 +21,9 @@ module AnsHelper
     render :partial => "#{opts[:path]}/create_root", :locals => { :class_name => class_name, :opts=>opts }
   end
 
+  # ans_tree(@pages, :class_name=>'Report', :id_field=>'id', :clean=>false)
+  #
+  # ans_tree(@pages, :admin=>true, :class_name=>'Report', :id_field=>:zip, :clean=>false)
   def ans_tree(tree, options= {})
     result= ''
 
