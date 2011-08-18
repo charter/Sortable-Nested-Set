@@ -56,10 +56,6 @@ External links
 # jQuery UI Nested Sortable "http://mjsarfatti.com/sandbox/nestedSortable/":http://mjsarfatti.com/sandbox/nestedSortable/
 # Rails 3 Nested Set Gem "https://github.com/skyeagle/nested_set":https://github.com/skyeagle/nested_set
 
-h3. Acknowledgments
-
-"Iconza":http://iconza.com/ for free icons for this application
-
 h2. Understanding
 
 We have an objects. This application uses the pages (Page Model).
@@ -109,11 +105,119 @@ We rendering pages with *ans_tree* helper
 *ans_tree* helper - is simple recursive  method for rendering nested_set (sorry, i wrote it myself)
 *ans_tree* helper is here app/helpers/ans_helper.rb
 
+After rendering we are have pages#index page.
 
+<pre>
+= javascript_include_tag 'jquery-1.6.2.min'
+= javascript_include_tag 'jquery_ujs'
+= javascript_include_tag 'jquery-ui-1.8.11.custom.min'
+= javascript_include_tag 'jquery.ui.nestedSortable'
 
+= stylesheet_link_tag 'reset'
+= stylesheet_link_tag 'nested_set/style'
+= csrf_meta_tag
 
+:javascript
 
+  // INIT Nested Sortable (Manuele J Sarfatti)
+  $(document).ready(function(){
+    $('ol.sortable').nestedSortable({
+      disableNesting: 'no-nest',
+      forcePlaceholderSize: true,
+      handle: 'div.handle',
+      helper:	'clone',
+      items: 'li',
+      maxLevels: 5,
+      opacity: .6,
+      placeholder: 'placeholder',
+      revert: 250,
+      tabSize: 25,
+      tolerance: 'pointer',
+      toleranceElement: '> div'
+    })
 
+    // DEFINE AJAX function
+    function send_nested_sets_new_structure(item_id, parent_id, prev_id, next_id){
+      jQuery.ajax({
+        type: 'POST',
+        url: '#{restructure_pages_url}',
+        data: {node_id: item_id, parent_id: parent_id, prev_id: prev_id, next_id: next_id, authenticity_token: '#{form_authenticity_token}' },
+        dataType: 'script',
+        beforeSend: function(xhr){},
+        error: function(xhr, status, error){alert(error);}
+      });//jQuery.ajax
+    }
+
+    //SEND AJAX on UPDATE
+    $('ol.sortable').sortable({
+      update: function(event, ui){
+        // ITEM ID
+        item_id = ui.item.attr('id');
+        // PARENT ID
+        parent_id = ui.item.parent().attr('id');
+        $('#parent').html(parent_id);
+        // PREV ID
+        prev_id = ui.item.prev().attr('id');
+        // NEXT ID
+        next_id = ui.item.next().attr('id');
+
+        send_nested_sets_new_structure(item_id, parent_id, prev_id, next_id);
+      }
+    });
+  });
+</pre>
+
+Ajax request send ids of current node, siblings and parent:
+
+<pre>
+  node_id: item_id,
+  parent_id: parent_id,
+  prev_id: prev_id,
+  next_id: next_id 
+</pre>
+
+Params come to *restructure_pages_url* => pages#restructure
+
+<pre>
+
+  def restructure
+    node_id   = params[:node_id].to_i
+    parent_id = params[:parent_id].to_i
+    prev_id   = params[:prev_id].to_i
+    next_id   = params[:next_id].to_i
+
+    return :text=>"alert('do nothing');" if parent_id.zero? && prev_id.zero? && next_id.zero?
+
+    if prev_id.zero? && next_id.zero?
+      Page.find(node_id).move_to_child_of Page.find(parent_id)
+    elsif !prev_id.zero?
+      Page.find(node_id).move_to_right_of Page.find(prev_id)
+    elsif !next_id.zero?
+      Page.find(node_id).move_to_left_of Page.find(next_id)
+    end
+
+    render(:nothing=>true)
+  end
+
+</pre>
+
+h3. Attention!
+
+if you want to use reversed_nested_set scope (see Model)
+you should *remove* *move_to_right_of* with *move_to_left_of*
+and *remove* *move_to_right_of* with *move_to_left_of*
+
+<pre>
+class PagesController < ApplicationController
+  def index
+    @pages = Page.nested_set.all
+  end
+end
+</pre>
+
+h3. Acknowledgments
+
+"Iconza":http://iconza.com/ for free icons for this application
 
 
 

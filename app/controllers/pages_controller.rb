@@ -21,8 +21,8 @@ class PagesController < ApplicationController
 
   # Attention!
   # if you want to use reversed_nested_set scope (see Model)
-  # you should replace move_to_right_of with move_to_left_of  
-  # and replace move_to_right_of with move_to_left_of
+  # you should *remove* *move_to_right_of* with *move_to_left_of*
+  # and *remove* *move_to_right_of* with *move_to_left_of*
   def restructure
     node_id   = params[:node_id].to_i
     parent_id = params[:parent_id].to_i
