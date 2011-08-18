@@ -42,8 +42,13 @@
         }
 
         // PARENT ID
+        // TODO!!!
         parent_id = ui.item.parent().attr('id');
-        $('#parent').html(parent_id);
+        if(typeof(parent_id) == 'undefined'){
+          $('#parent').html('none');
+        }else{
+          $('#parent').html(parent_id);
+        }
 
         // PREV ID
         prev_id = ui.item.prev().attr('id');
