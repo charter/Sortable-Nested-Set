@@ -60,4 +60,46 @@ h3. Acknowledgments
 
 "Iconza":http://iconza.com/ for free icons for this application
 
+h2. Understanding
+
+We have an objects. This application uses the pages (Page Model).
+Page Model include nested_set functionality (gem nested_set).
+
+*models/page.rb*
+
+<pre>
+class Page < ActiveRecord::Base
+  acts_as_nested_set
+
+  scope :nested_set,          order('lft ASC')
+  scope :reversed_nested_set, order('lft DESC')
+
+end
+</pre>
+
+We get a lot of pages
+
+*controllers/pages_controller.rb*
+
+<pre>
+class PagesController < ApplicationController
+  def index
+    @pages = Page.nested_set.all
+  end
+end
+</pre>
+
+We rendering pages with *ans_tree* helper
+
+*views/pages/index.haml*
+
+<pre>
+%ol.sortable.ui-sortable.nested_set#nested_set
+  = raw ans_tree(@pages, :path=>'pages/nested_set', :admin=>true, :class_name=>'Page', :id_field=>:id)
+</pre>
+
+
+
+
+
 
