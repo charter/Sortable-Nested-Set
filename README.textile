@@ -1,7 +1,4 @@
-h1. It's NOT READY TODAY. Do not use now! RELEASE COMING SOON! WAIT!
-
-
-h3. Sortable Nested Set for Rails 3.1
+h3. Sortable Nested Set for Rails 3.1.rc6
 
 Dreaming about Drag and Drop for Nested Sets? It's should be with JQuery?
 Here's the solution!
@@ -10,7 +7,7 @@ Here's the solution!
 
 Server side:
 
-# Rails 3.1 rc5
+# Rails 3.1 rc6
 # Nested Set Gem
 
 Client side:
@@ -26,6 +23,25 @@ h3. Installing
 # cd Sortable-Nested-Set/
 # sudo bundle install
 # rake app:create
+
+  development:
+    adapter: mysql2
+    database: sortable_nested_set_dev
+    host: localhost
+    username: root
+    password: qwerty
+    encoding: utf8
+    timeout: 5000
+
+  production:
+    adapter: mysql2
+    database: sortable_nested_set_pro
+    host: localhost
+    username: root
+    password: qwerty
+    encoding: utf8
+    timeout: 5000
+
 # rails s
 
 *Browser: localhost:3000*
