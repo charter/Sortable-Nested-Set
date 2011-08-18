@@ -98,6 +98,22 @@ We rendering pages with *ans_tree* helper
   = raw ans_tree(@pages, :path=>'pages/nested_set', :admin=>true, :class_name=>'Page', :id_field=>:id)
 </pre>
 
+*ans_tree* helper uses partials from *views/pages/nested_set*
+
+* _create_root.haml - for render create button
+* _link.haml - link to edit current node
+* _controls.haml - rendering control buttons - up, down, delete, edit
+* _nested_set.haml - HTML tag for containing nested_set (OL or UL or DIV or other)
+* _nested_set_item.haml - HTML tag for rendering node (LI or DIV or other)
+
+*ans_tree* helper - is simple recursive  method for rendering nested_set (sorry, i wrote it myself)
+*ans_tree* helper is here app/helpers/ans_helper.rb
+
+
+
+
+
+
 
 
 
