@@ -22,9 +22,10 @@ h3. Installing
 # git clone git@github.com:the-teacher/Sortable-Nested-Set.git
 # cd Sortable-Nested-Set/
 # sudo bundle install
-# rake app:create
 
-bq.
+*config/database.yml*
+
+<pre>
   development:
     adapter: mysql2
     database: sortable_nested_set_dev
@@ -42,7 +43,10 @@ bq.
     password: qwerty
     encoding: utf8
     timeout: 5000
+</pre>
 
+
+# rake app:create
 # rails s
 
 *Browser: localhost:3000*
