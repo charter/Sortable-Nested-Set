@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.0.rc5'
+gem 'rails', '3.1.0.rc6'
 
 group :assets do
   gem 'sass-rails', "~> 3.1.0.rc"
@@ -8,7 +8,7 @@ group :assets do
   gem 'uglifier'
 end
 
-gem 'therubyracer'
+gem 'therubyracer' # OR sudo apt-get install nodejs
 gem 'mysql2'
 gem 'nested_set'
 gem 'haml'

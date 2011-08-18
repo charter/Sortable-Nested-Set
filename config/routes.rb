@@ -1,4 +1,6 @@
 SortableNestedSet::Application.routes.draw do
+  root :to => "pages#index"
+
   resources :pages do 
     member{
       get   :up
@@ -9,6 +11,4 @@ SortableNestedSet::Application.routes.draw do
       post  :restructure
     }
   end
-
-  root :to => "pages#index"
 end
