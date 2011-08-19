@@ -155,6 +155,9 @@ After rendering we are have pages#index page.
         item_id = ui.item.attr('id');
         // PARENT ID
         parent_id = ui.item.parent().attr('id');
+        if(typeof(parent_id) == 'undefined'){
+          parent_id = ui.item.parent().parent().attr('id');
+        }
         $('#parent').html(parent_id);
         // PREV ID
         prev_id = ui.item.prev().attr('id');
@@ -210,9 +213,34 @@ and *remove* *move_to_right_of* with *move_to_left_of*
 <pre>
 class PagesController < ApplicationController
   def index
-    @pages = Page.nested_set.all
+    @pages = Page.reversed_nested_set.all
   end
 end
+</pre>
+
+Change pages#restructure to this:
+
+<pre>
+
+  def restructure
+    node_id   = params[:node_id].to_i
+    parent_id = params[:parent_id].to_i
+    prev_id   = params[:prev_id].to_i
+    next_id   = params[:next_id].to_i
+
+    return :text=>"alert('do nothing');" if parent_id.zero? && prev_id.zero? && next_id.zero?
+
+    if prev_id.zero? && next_id.zero?
+      Page.find(node_id).move_to_child_of Page.find(parent_id)
+    elsif !prev_id.zero?
+      Page.find(node_id).move_to_left_of Page.find(prev_id)
+    elsif !next_id.zero?
+      Page.find(node_id).move_to_right_of Page.find(next_id)
+    end
+
+    render(:nothing=>true)
+  end
+
 </pre>
 
 h3. Acknowledgments
