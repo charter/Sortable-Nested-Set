@@ -11,7 +11,12 @@
       data: {node_id: item_id, parent_id: parent_id, prev_id: prev_id, next_id: next_id, authenticity_token: '#{form_authenticity_token}' },
       dataType: 'script',
       beforeSend: function(xhr){},
-      error: function(xhr, status, error){alert(error);}
+      complete: function(xhr){
+        $('#status').html('Page <b>' + item_id + '</b> restructured');
+      },
+      error: function(xhr, status, error){
+        $('#status').html(error);
+      }
     });//jQuery.ajax
   }//fn
 
@@ -42,13 +47,11 @@
         }
 
         // PARENT ID
-        // TODO!!!
         parent_id = ui.item.parent().attr('id');
         if(typeof(parent_id) == 'undefined'){
-          $('#parent').html('none');
-        }else{
-          $('#parent').html(parent_id);
+          parent_id = ui.item.parent().parent().attr('id');
         }
+        $('#parent').html(parent_id);
 
         // PREV ID
         prev_id = ui.item.prev().attr('id');
@@ -100,6 +103,11 @@
     &nbsp;
   Next sibling: 
   %span#next
+    &nbsp;
+
+%p.nested_set_info
+  Process Status: 
+  %span#status.normal
     &nbsp;
 
 %ol.sortable.ui-sortable.nested_set#nested_set
