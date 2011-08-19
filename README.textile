@@ -17,6 +17,7 @@ h3. TODO
 
 Server side:
 
+# ruby 1.8.x or ruby 1.9.x
 # Rails 3.1 rc6
 # Nested Set Gem
 
@@ -31,7 +32,7 @@ h3. Installing
 # cd ~
 # git clone git@github.com:the-teacher/Sortable-Nested-Set.git
 # cd Sortable-Nested-Set/
-# sudo bundle install
+# bundle install
 
 *config/database.yml*
 
