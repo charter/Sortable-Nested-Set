@@ -10,6 +10,11 @@ Here's the solution!
 Решение должно быть на основе JQuery?
 Просто попробуйте! Кажется это то, что надо! Вероятно, можно даже использовать в продакшене!
 
+h3. TODO
+
+# makes english better
+# remove ans_tree helper with something else (maybe)
+
 Server side:
 
 # Rails 3.1 rc6
